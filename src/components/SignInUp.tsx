@@ -13,7 +13,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
-import { signIn, signUp } from "~/server/actions";
+import { signIn, signUp } from "~/server/actions/authentication";
 
 export default function SingInUp() {
   const [signInError, setSignInError] = useState<string | null>(null);

@@ -70,9 +70,10 @@ export default function CareersPage() {
               Our Departments
             </h2>
             <p className="mt-4 text-gray-500">
-              Organize is a system to keep your desk tidy and photo-worthy all
-              day long. Procrastinate your work while you meticulously arrange
-              items into dedicated trays.
+              Our wide range of departments ensures that our chocolate is made
+              with precision, care, and innovation. From production to
+              warehouse, we have the expertise and resources to deliver
+              delicious confections that delight our customers.
             </p>
           </div>
         </div>

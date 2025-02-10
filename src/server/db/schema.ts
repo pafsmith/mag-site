@@ -3,9 +3,7 @@
 
 import { sql } from "drizzle-orm";
 import {
-  index,
   integer,
-  pgTable,
   pgTableCreator,
   timestamp,
   varchar,
@@ -24,9 +22,42 @@ export const createTable = pgTableCreator((name) => `mag-site_${name}`);
 
 // Departments table
 export const departments = createTable("departments", {
-  id: integer("id").primaryKey(),
+  id: serial("id").primaryKey(),
   name: varchar("name").notNull(),
   description: text("description"),
+});
+
+// User table
+export const user = createTable("user", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").notNull(),
+  image: text("image"),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
+  role: text("role"),
+});
+
+// Jobs table
+export const jobs = createTable("jobs", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  responsibilities: text("responsibilities")
+    .array()
+    .notNull()
+    .default(sql`ARRAY[]::text[]`),
+  requirements: text("requirements")
+    .array()
+    .notNull()
+    .default(sql`ARRAY[]::text[]`),
+  benefits: text("benefits")
+    .array()
+    .notNull()
+    .default(sql`ARRAY[]::text[]`),
+  departmentId: integer("departmentId").references(() => departments.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Applications table
@@ -42,16 +73,7 @@ export const applications = createTable("applications", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const jobs = createTable("jobs", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  description: text("description").notNull(),
-  responsibilities: text("responsibilities").array().notNull().default([]),
-  requirements: text("requirements").array().notNull().default([]),
-  benefits: text("benefits").array().notNull().default([]),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
+// Slots table
 export const slots = createTable("slots", {
   id: serial("id").primaryKey(),
   date: timestamp("date").notNull(),
@@ -63,17 +85,7 @@ export const slots = createTable("slots", {
   applicationId: integer("application_id").references(() => applications.id),
 });
 
-export const user = createTable("user", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  emailVerified: boolean("email_verified").notNull(),
-  image: text("image"),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
-  role: text("role"),
-});
-
+// Session table
 export const session = createTable("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
@@ -87,6 +99,7 @@ export const session = createTable("session", {
     .references(() => user.id),
 });
 
+// Account table
 export const account = createTable("account", {
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),
@@ -105,6 +118,7 @@ export const account = createTable("account", {
   updatedAt: timestamp("updated_at").notNull(),
 });
 
+// Verification table
 export const verification = createTable("verification", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),

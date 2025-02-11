@@ -15,6 +15,7 @@ export const editJobSpecSchema = z.object({
     z.string().min(1, { message: "Requirement cannot be empty" }),
   ),
   benefits: z.array(z.string().min(1, { message: "Benefit cannot be empty" })),
+  isSeasonal: z.boolean(),
 });
 
 export type EditedJobInput = z.infer<typeof editJobSpecSchema>;
@@ -33,6 +34,7 @@ export const jobSpecSchema = z.object({
   benefits: z
     .array(z.string().min(1, { message: "Benefit cannot be empty" }))
     .min(1, { message: "At least one benefit is required" }),
+  isSeasonal: z.boolean(),
 });
 
 export type JobSpec = z.infer<typeof jobSpecSchema>;

@@ -21,6 +21,7 @@ export const editJobSpecSchema = z.object({
       value: z.string().min(1, { message: "Benefit cannot be empty" }),
     }),
   ),
+  isSeasonal: z.boolean(),
 });
 
 export type EditJobSpecFormValues = z.infer<typeof editJobSpecSchema>;
@@ -51,6 +52,7 @@ export const jobSpecSchema = z.object({
       }),
     )
     .min(1, { message: "At least one benefit is required" }),
+  isSeasonal: z.boolean(),
 });
 
 // Infer the TypeScript type from the schema.

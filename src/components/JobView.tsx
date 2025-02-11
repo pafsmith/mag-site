@@ -2,85 +2,63 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { type jobs } from "~/server/db/schema";
+import { type InferSelectModel } from "drizzle-orm";
+import { describe } from "node:test";
+import { Description } from "@headlessui/react";
 
-interface JobViewProps {
-  jobTitle: string;
-  seasonal: boolean;
-  sections: Array<{
-    title: string;
-    paragraphs: string[];
-  }>;
-  isPreview?: boolean;
-  onEdit?: () => void;
-  onSubmit?: (e: React.FormEvent) => Promise<void>;
-  isEditMode?: boolean;
-}
+type Job = InferSelectModel<typeof jobs>;
 
-export function JobView({
-  jobTitle,
-  seasonal,
-  sections,
-  isPreview = false,
-  onEdit,
-  onSubmit,
-  isEditMode,
-}: JobViewProps) {
+export function JobView({ job }: { job: Job }) {
   return (
     <div className="relative mx-auto max-w-[1536px] gap-10 px-6 lg:flex lg:pb-[148px]">
       <div className="relative h-full flex-1">
         <div className="flex flex-col gap-6 lg:gap-8">
-          {isPreview ? (
-            <button
-              onClick={onEdit}
-              className="mt-[50px] inline-flex cursor-pointer items-center text-xl leading-8 text-neutral-500 hover:text-orange-500"
-            >
-              <span>
-                <ArrowLeft size={20} />
-              </span>
-              <span className="pl-2">back to editing</span>
-            </button>
-          ) : (
-            <Link
-              href="/careers/jobs"
-              className="mt-[50px] inline-flex cursor-pointer items-center text-xl leading-8 text-neutral-500 hover:text-orange-500"
-            >
-              <span>
-                <ArrowLeft size={20} />
-              </span>
-              <span className="pl-2">back to jobs</span>
-            </Link>
-          )}
+          <Link
+            href="/careers/jobs"
+            className="mt-[50px] inline-flex cursor-pointer items-center text-xl leading-8 text-neutral-500 hover:text-orange-500"
+          >
+            <span>
+              <ArrowLeft size={20} />
+            </span>
+            <span className="pl-2">back to jobs</span>
+          </Link>
+
           <h1 className="text-5xl font-medium leading-none lg:w-1/2 lg:text-6xl">
-            {jobTitle}
+            {job.title}
           </h1>
           <h3 className="items-center text-base font-light leading-5 text-orange-500 lg:flex lg:text-lg lg:font-normal lg:leading-6">
             <p>
               <span>Telford (England)</span>
             </p>
             <span className="mx-4 hidden h-1 w-1 shrink-0 rounded-full bg-orange-500 lg:block" />
-            <p>{seasonal ? "Seasonal" : "Permanent / fixed-term"}</p>
+            <p>{job.isSeasonal ? "Seasonal" : "Permanent / fixed-term"}</p>
           </h3>
-          {!isPreview && (
-            <div className="relative inline-block">
-              <a className="inline-block w-44 rounded-md bg-black px-5 py-3 text-2xl font-semibold leading-8 text-white hover:bg-orange-500 md:text-center">
-                Apply
-              </a>
-            </div>
-          )}
           <div className="flex">
             <Image
               className="w-auto rounded-xl shadow-xl"
-              src="/plc.jpg"
+              src="/jobs/eng.jpg"
               alt="job-page-hero"
               width={500}
               height={500}
             />
           </div>
+          <div className="flex justify-center sm:justify-start">
+            <button className="w-1/3 rounded-lg bg-orange-500 px-6 py-3 text-xl font-bold text-white shadow hover:bg-orange-600">
+              <Link href={`/careers/jobs/${job.id}`}>Apply Now</Link>
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="mt-[50px] flex-1 text-base font-normal leading-6 tracking-tighter text-neutral-600 lg:pb-0 lg:text-xl lg:leading-7">
-        {sections.map((section, index) => (
+        {job.description.split("\n").map((line, index) => (
+          <p key={index} className="pb-3">
+            {line}
+          </p>
+        ))}
+        {/* <p>{job.description}</p> */}
+        {/* {sections.map((section, index) => (
           <div key={index} className="pb-4">
             {index === 0 ? (
               <div>
@@ -105,8 +83,38 @@ export function JobView({
               </>
             )}
           </div>
-        ))}
+        ))} */}
+        <h2 className="pb-6 text-lg font-normal leading-6 text-gray-900 lg:text-2xl lg:font-semibold lg:leading-10 lg:text-black">
+          Responsibilities
+        </h2>
+        <ul className="list-disc whitespace-pre-line pl-6 lg:pl-8">
+          {job.responsibilities.map((item, pIndex) => (
+            <li key={pIndex} className="pb-6 marker:text-[1.3em]">
+              {item}
+            </li>
+          ))}
+        </ul>
 
+        <h2 className="pb-6 text-lg font-normal leading-6 text-gray-900 lg:text-2xl lg:font-semibold lg:leading-10 lg:text-black">
+          Requirements
+        </h2>
+        <ul className="list-disc whitespace-pre-line pl-6 lg:pl-8">
+          {job.requirements.map((item, pIndex) => (
+            <li key={pIndex} className="pb-6 marker:text-[1.3em]">
+              {item}
+            </li>
+          ))}
+        </ul>
+        <h2 className="pb-6 text-lg font-normal leading-6 text-gray-900 lg:text-2xl lg:font-semibold lg:leading-10 lg:text-black">
+          Benefits
+        </h2>
+        <ul className="list-disc whitespace-pre-line pl-6 lg:pl-8">
+          {job.benefits.map((item, pIndex) => (
+            <li key={pIndex} className="pb-6 marker:text-[1.3em]">
+              {item}
+            </li>
+          ))}
+        </ul>
         {/* Standard closing sections */}
         <div className="pb-4">
           <h2 className="pb-6 text-lg font-normal leading-6 text-gray-900 lg:text-2xl lg:font-semibold lg:leading-10 lg:text-black">
@@ -136,7 +144,7 @@ export function JobView({
           </p>
         </div>
 
-        {isPreview && (
+        {/* {isPreview && (
           <div className="mt-8 flex gap-4">
             <Button onClick={onEdit} variant="outline">
               Edit
@@ -145,7 +153,7 @@ export function JobView({
               {isEditMode ? "Update" : "Create"} Job Spec
             </Button>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -23,8 +23,13 @@ export const createTable = pgTableCreator((name) => `mag-site_${name}`);
 // Departments table
 export const departments = createTable("departments", {
   id: serial("id").primaryKey(),
-  name: varchar("name").notNull(),
   description: text("description"),
+  featuredImage: text("featuredImage"),
+  gallery: text("gallery")
+    .array()
+    .notNull()
+    .default(sql`ARRAY[]::text[]`),
+  name: varchar("name").notNull(),
 });
 
 // User table
@@ -57,6 +62,9 @@ export const jobs = createTable("jobs", {
     .notNull()
     .default(sql`ARRAY[]::text[]`),
   departmentId: integer("departmentId").references(() => departments.id),
+  isActive: boolean("is_active").notNull().default(false),
+  isSeasonal: boolean("is_seasonal").notNull().default(false),
+  location: varchar("location", { length: 255 }).notNull().default("Telford"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

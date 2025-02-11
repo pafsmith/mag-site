@@ -42,6 +42,7 @@ export default function CreateJobSpecPage() {
       responsibilities: [{ value: "" }],
       requirements: [{ value: "" }],
       benefits: [{ value: "" }],
+      isSeasonal: false,
     },
   });
 
@@ -83,6 +84,7 @@ export default function CreateJobSpecPage() {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
+    formData.append("isSeasonal", String(data.isSeasonal));
     data.responsibilities.forEach((r) =>
       formData.append("responsibilities", r.value),
     );
@@ -126,6 +128,27 @@ export default function CreateJobSpecPage() {
           {errors.description && (
             <p className="mt-1 text-sm text-red-600">
               {errors.description.message}
+            </p>
+          )}
+        </div>
+
+        {/* Seasonality */}
+        <div className="flex flex-col">
+          <Label htmlFor="isSeasonal" className="mb-1">
+            Seasonality
+          </Label>
+          <select
+            id="isSeasonal"
+            {...register("isSeasonal", {
+              setValueAs: (value: string) => value === "true",
+            })}
+          >
+            <option value="true">Seasonal</option>
+            <option value="false">Permanent</option>
+          </select>
+          {errors.isSeasonal && (
+            <p className="mt-1 text-sm text-red-600">
+              {errors.isSeasonal.message}
             </p>
           )}
         </div>

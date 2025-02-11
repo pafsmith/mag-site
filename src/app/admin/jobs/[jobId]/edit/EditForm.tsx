@@ -33,7 +33,11 @@ export default function EditJobSpecForm({
     formState: { errors },
   } = useForm<EditJobSpecFormValues>({
     resolver: zodResolver(editJobSpecSchema),
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      // Ensure isSeasonal is included in defaultValues
+      isSeasonal: defaultValues.isSeasonal ?? false,
+    },
   });
 
   // Setup dynamic fields for responsibilities.
@@ -64,6 +68,7 @@ export default function EditJobSpecForm({
     formData.append("jobId", data.jobId);
     formData.append("title", data.title);
     formData.append("description", data.description);
+    formData.append("isSeasonal", String(data.isSeasonal));
     data.responsibilities.forEach((item) => {
       formData.append("responsibilities", item.value);
     });
@@ -106,6 +111,26 @@ export default function EditJobSpecForm({
           {errors.description && (
             <p className="mt-1 text-sm text-red-600">
               {errors.description.message}
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-col">
+          <Label htmlFor="isSeasonal" className="mb-1">
+            Seasonality
+          </Label>
+          <select
+            id="isSeasonal"
+            {...register("isSeasonal", {
+              setValueAs: (value: string) => value === "true",
+            })}
+          >
+            <option value="true">Seasonal</option>
+            <option value="false">Permanent</option>
+          </select>
+          {errors.isSeasonal && (
+            <p className="mt-1 text-sm text-red-600">
+              {errors.isSeasonal.message}
             </p>
           )}
         </div>

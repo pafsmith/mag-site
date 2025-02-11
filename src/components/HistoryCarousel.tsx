@@ -32,13 +32,13 @@ function HistoryItem({
   return (
     <div className="grid h-full gap-4 p-4 md:grid-cols-2 md:gap-8 md:p-6">
       <div className="order-2 flex flex-col space-y-3 md:order-1 md:space-y-4">
-        <div className="text-primary-foreground inline-block w-fit rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold md:text-sm">
+        <div className="inline-block w-fit rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold text-primary-foreground md:text-sm">
           {year}
         </div>
         <h3 className="line-clamp-2 text-xl font-bold tracking-tight md:text-2xl">
           {title}
         </h3>
-        <p className="text-muted-foreground line-clamp-4 text-sm leading-relaxed md:text-base">
+        <p className="line-clamp-4 text-sm leading-relaxed text-muted-foreground md:text-base">
           {description}
         </p>
       </div>
@@ -52,11 +52,11 @@ function HistoryItem({
             height={1000}
           />
         ) : Icon ? (
-          <div className="bg-muted/50 flex h-full w-full items-center justify-center rounded-lg shadow-sm">
-            <Icon className="text-primary/40 h-24 w-24 md:h-32 md:w-32" />
+          <div className="flex h-full w-full items-center justify-center rounded-lg bg-muted/50 shadow-sm">
+            <Icon className="h-24 w-24 text-primary/40 md:h-32 md:w-32" />
           </div>
         ) : (
-          <div className="bg-muted/50 h-full w-full rounded-lg shadow-sm" />
+          <div className="h-full w-full rounded-lg bg-muted/50 shadow-sm" />
         )}
       </div>
     </div>
@@ -91,14 +91,14 @@ function HistoryCarousel({
       title: "Magna Founded",
       description:
         "Nihil aut nam. Dignissimos a pariatur et quos omnis. Aspernatur asperiores et dolorem dolorem optio voluptate repudiandae.",
-      imageUrl: "/outside.png",
+      imageUrl: "/about/founded.jpg",
     },
     {
       year: "1981",
       title: "First Easter Egg Produced",
       description:
         "Provident quia ut esse. Vero vel eos repudiandae aspernatur. Cumque minima impedit sapiente a architecto nihil.",
-      imageUrl: "/eggconveyor43.png",
+      imageUrl: "/about/first-egg.jpg",
     },
     // Add more events...
   ];
@@ -125,7 +125,7 @@ function HistoryCarousel({
 
           {/* Desktop Navigation */}
           <div className="mt-8 hidden items-center justify-between md:flex">
-            <CarouselPrevious className="hover:bg-primary hover:text-primary-foreground relative transition-colors" />
+            <CarouselPrevious className="relative transition-colors hover:bg-primary hover:text-primary-foreground" />
             <div className="flex gap-1.5">
               {Array.from({ length: count }).map((_, index) => (
                 <button
@@ -140,7 +140,7 @@ function HistoryCarousel({
                 />
               ))}
             </div>
-            <CarouselNext className="hover:bg-primary hover:text-primary-foreground static transition-colors" />
+            <CarouselNext className="static transition-colors hover:bg-primary hover:text-primary-foreground" />
           </div>
 
           {/* Mobile Navigation */}
@@ -148,7 +148,7 @@ function HistoryCarousel({
             <div className="flex items-center justify-center gap-3">
               <CarouselPrevious
                 variant="outline"
-                className="border-primary/20 hover:bg-primary/10 relative left-0 right-0 h-8 w-8 translate-y-0 rounded-full"
+                className="relative left-0 right-0 h-8 w-8 translate-y-0 rounded-full border-primary/20 hover:bg-primary/10"
               />
               <div className="flex gap-1.5">
                 {Array.from({ length: count }).map((_, index) => (
@@ -166,7 +166,7 @@ function HistoryCarousel({
               </div>
               <CarouselNext
                 variant="outline"
-                className="border-primary/20 hover:bg-primary/10 relative left-0 right-0 h-8 w-8 translate-y-0 rounded-full"
+                className="relative left-0 right-0 h-8 w-8 translate-y-0 rounded-full border-primary/20 hover:bg-primary/10"
               />
             </div>
           </div>
@@ -196,25 +196,25 @@ function VerticalHistoryItem({
             height={1000}
           />
         ) : Icon ? (
-          <div className="bg-muted/50 flex h-full w-full items-center justify-center rounded-lg shadow-sm">
-            <Icon className="text-primary/40 h-24 w-24 md:h-32 md:w-32" />
+          <div className="flex h-full w-full items-center justify-center rounded-lg bg-muted/50 shadow-sm">
+            <Icon className="h-24 w-24 text-primary/40 md:h-32 md:w-32" />
           </div>
         ) : (
-          <div className="bg-muted/50 h-full w-full rounded-lg shadow-sm" />
+          <div className="h-full w-full rounded-lg bg-muted/50 shadow-sm" />
         )}
       </div>
 
       {/* Center line with year bubble */}
       <div className="relative hidden justify-center md:flex">
         <div className="h-full w-0.5 bg-orange-500/20"></div>
-        <div className="text-primary-foreground absolute top-1/2 -translate-y-1/2 rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold md:text-sm">
+        <div className="absolute top-1/2 -translate-y-1/2 rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold text-primary-foreground md:text-sm">
           {year}
         </div>
       </div>
 
       {/* Mobile year badge */}
       <div className="md:hidden">
-        <div className="text-primary-foreground inline-block rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold md:text-sm">
+        <div className="inline-block rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold text-primary-foreground md:text-sm">
           {year}
         </div>
       </div>
@@ -224,7 +224,7 @@ function VerticalHistoryItem({
         <h3 className="line-clamp-2 text-xl font-bold tracking-tight md:text-2xl">
           {title}
         </h3>
-        <p className="text-muted-foreground text-sm leading-relaxed md:text-base">
+        <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
           {description}
         </p>
       </div>

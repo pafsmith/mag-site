@@ -87,7 +87,7 @@ export default function page() {
                     <div className="relative">
                       <Image
                         alt=""
-                        src="/eggconveyor43.png"
+                        src="/about/about1.jpg"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                         width={1000}
                         height={1000}
@@ -99,7 +99,7 @@ export default function page() {
                     <div className="relative">
                       <Image
                         alt=""
-                        src="/eggs54.png"
+                        src="/about/about2.jpg"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                         width={1000}
                         height={1000}
@@ -109,7 +109,7 @@ export default function page() {
                     <div className="relative">
                       <Image
                         alt=""
-                        src="/eggs219.png"
+                        src="/about/about3.jpg"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                         width={1000}
                         height={1000}
@@ -121,7 +121,7 @@ export default function page() {
                     <div className="relative">
                       <Image
                         alt=""
-                        src="/eggspoon11.png"
+                        src="/about/about4.jpg"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                         width={1000}
                         height={1000}
@@ -131,7 +131,7 @@ export default function page() {
                     <div className="relative">
                       <Image
                         alt=""
-                        src="/avg169.png"
+                        src="/about/about5.jpg"
                         className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                         width={1000}
                         height={1000}
@@ -151,7 +151,7 @@ export default function page() {
           <section aria-labelledby="features-heading" className="relative">
             <Image
               alt="Black leather journal with silver steel disc binding resting on wooden shelf with machined steel pen."
-              src="/meeting.jpg"
+              src="/about/meeting.jpg"
               className="aspect-[3/2] w-full object-cover sm:aspect-[5/2] lg:absolute lg:aspect-auto lg:h-full lg:w-1/2 lg:pr-4 xl:pr-16"
               width={1000}
               height={1000}

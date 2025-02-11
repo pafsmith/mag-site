@@ -29,6 +29,8 @@ export async function submitEditedJobSpec(formData: FormData) {
 
   const benefits = formData.getAll("benefits").map((item) => item as string);
 
+  const isSeasonalValue = formData.get("isSeasonal");
+
   // Package input.
   const input: EditedJobInput = {
     jobId,
@@ -37,6 +39,7 @@ export async function submitEditedJobSpec(formData: FormData) {
     responsibilities,
     requirements,
     benefits,
+    isSeasonal: Boolean(isSeasonalValue === "true"),
   };
 
   // Validate.
@@ -88,6 +91,9 @@ export async function submitJobSpec(
   // Extract fields from the FormData.
   const title = formData.get("title");
   const description = formData.get("description");
+  const isSeasonalValue = formData.get("isSeasonal");
+
+  console.log("Raw isSeasonal value:", isSeasonalValue); // Debug log
 
   // Use getAll so we can collect all array values.
   const responsibilities = formData.getAll("responsibilities") as string[];
@@ -101,7 +107,11 @@ export async function submitJobSpec(
     responsibilities,
     requirements,
     benefits,
+    // More explicit boolean conversion
+    isSeasonal: Boolean(isSeasonalValue === "true"),
   };
+
+  console.log("Processed input:", input); // Debug log
 
   // Validate with Zod.
   const result = jobSpecSchema.safeParse(input);

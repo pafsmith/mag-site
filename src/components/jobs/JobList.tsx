@@ -1,5 +1,5 @@
-import JobCard from './JobCard';
-import { Job } from '@/types/Job';
+import JobCard from "./JobCard";
+import { Job } from "@/types/Job";
 
 function JobList({ jobs, admin }: { jobs: Job[]; admin: boolean }) {
   return (

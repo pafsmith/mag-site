@@ -72,13 +72,17 @@ export const jobs = createTable("jobs", {
 export const applications = createTable("applications", {
   id: serial("id").primaryKey(),
   jobId: integer("jobId").references(() => jobs.id),
+
   userId: text("userId").references(() => user.id),
+  status: text("status").notNull().default("pending"),
   fullName: varchar("fullName", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
   phoneNumber: varchar("phoneNumber", { length: 255 }).notNull(),
   coverLetter: text("coverLetter").notNull(),
   cvUrl: varchar("cvUrl", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  updatedBy: text("updatedBy").references(() => user.id),
 });
 
 // Slots table

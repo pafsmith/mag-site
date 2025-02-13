@@ -1,7 +1,7 @@
 import "server-only";
 
 import { db } from "~/server/db";
-import { departments, jobs } from "~/server/db/schema";
+import { applications, departments, jobs, user } from "~/server/db/schema";
 import { type JobSpec, type EditedJobInput } from "~/server/types/job-spec";
 import { eq, and } from "drizzle-orm";
 
@@ -27,6 +27,29 @@ export const QUERIES = {
   },
   getJobById: async (jobId: number) => {
     return await db.select().from(jobs).where(eq(jobs.id, jobId));
+  },
+  getAllApplications: async () => {
+    return await db
+      .select({
+        application: applications,
+        jobTitle: jobs.title,
+        userName: user.name,
+      })
+      .from(applications)
+      .leftJoin(jobs, eq(applications.jobId, jobs.id))
+      .leftJoin(user, eq(applications.updatedBy, user.id))
+      .orderBy(applications.createdAt);
+  },
+  getApplicationById: async (applicationId: number) => {
+    return await db
+      .select({
+        application: applications,
+        jobTitle: jobs.title,
+      })
+      .from(applications)
+      .leftJoin(jobs, eq(applications.jobId, jobs.id))
+      .where(eq(applications.id, applicationId))
+      .limit(1);
   },
 };
 

@@ -1,19 +1,18 @@
 import React from "react";
-import { getActiveJobs } from "./_data/jobs";
+// import { getActiveJobs } from "./_data/jobs";
 
 import Navbar from "~/components/global/Navbar";
 import Footer from "~/components/global/Footer";
-import JobList from "~/components/jobs/JobList";
 
 export default async function page() {
-  const activeJobs = await getActiveJobs();
-  const seasonalJobs = activeJobs.filter((job) => job.isSeasonal);
-  const permanentJobs = activeJobs.filter((job) => !job.isSeasonal);
+  // const activeJobs = await getActiveJobs();
+  // const seasonalJobs = activeJobs.filter((job) => job.isSeasonal);
+  // const permanentJobs = activeJobs.filter((job) => !job.isSeasonal);
 
   return (
     <>
       <Navbar transparent={false} />
-      <div className="container mx-auto min-h-[60vh] max-w-7xl px-4 py-8">
+      {/* <div className="container mx-auto min-h-[60vh] max-w-7xl px-4 py-8">
         <div className="flex flex-col gap-7">
           <h1 className="text-center text-4xl font-bold">Active Jobs</h1>
           <div className="overflow-hidden sm:rounded-lg sm:shadow-sm">
@@ -41,7 +40,7 @@ export default async function page() {
             <JobList jobs={permanentJobs} admin={false} />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Footer />
     </>

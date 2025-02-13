@@ -8,6 +8,9 @@ import { type JobApplication } from "~/client/types/application";
 import { supabase } from "~/server/db/supabase";
 import { db } from "~/server/db";
 import { applications } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
+import { transporter } from "../nodemailer";
+import { url } from "inspector";
 export type SubmitApplicationResponse =
   | { success: true }
   | { success: false; fieldErrors: Record<string, string[]> };
@@ -110,3 +113,64 @@ export const uploadImage = async (file: File) => {
     throw error;
   }
 };
+
+export async function approveApplication(id: number) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  console.log("approving application", id);
+  await db
+    .update(applications)
+    .set({ status: "approved", updatedBy: user?.id, updatedAt: new Date() })
+    .where(eq(applications.id, id));
+  const application = await db
+    .select()
+    .from(applications)
+    .where(eq(applications.id, id))
+    .limit(1);
+  const userEmail = application[0]?.email;
+  transporter.sendMail(
+    {
+      from: "no-reply@magna.co.uk",
+      to: userEmail,
+      subject: "Application Approved",
+      text: `Congratulations! Your application has been approved.`,
+    },
+    (error, info) => {
+      if (error) {
+        return console.error("Error while sending email:", error);
+      }
+      console.log("Email sent successfully:", info.response);
+    },
+  );
+  redirect(`/admin/applications/`);
+}
+
+export async function rejectApplication(id: number) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  console.log("rejecting application", id);
+  const application = await db
+    .update(applications)
+    .set({ status: "rejected", updatedBy: user?.id, updatedAt: new Date() })
+    .where(eq(applications.id, id))
+    .returning();
+  const userEmail = application[0]?.email;
+  transporter.sendMail(
+    {
+      from: "no-reply@magna.co.uk",
+      to: userEmail,
+      subject: "Application Rejected",
+      text: `Unfortunately, your application has been rejected.`,
+    },
+    (error, info) => {
+      if (error) {
+        return console.error("Error while sending email:", error);
+      }
+      console.log("Email sent successfully:", info.response);
+    },
+  );
+}

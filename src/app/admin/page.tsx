@@ -1,5 +1,3 @@
-function adminPage() {
-  return <div>admin page</div>;
+export default function adminPage() {
+  return <div>Test</div>;
 }
-
-export default adminPage;

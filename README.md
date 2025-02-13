@@ -38,4 +38,5 @@
 - [ ] When interview is booked, generate a google calendar event
 - [ ] When interview is booked, send an email to the candidate
 - [ ] Add ability for candidates to view interview slots
-- [ ] Create contact form for candidates
+- [x] Create contact form for candidates
+- [ ] Create functionality for contact form

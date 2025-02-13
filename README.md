@@ -1,29 +1,41 @@
-# Create T3 App
+# Magna Site
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### Tech Stack
 
-## What's next? How do I make an app with this?
+- Next.js
+- Tailwind
+- TypeScript
+- Drizzle ORM
+- Shadcn Components
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### Requirements
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- Node.js
+- PostgreSQL (or any other database)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Installation
 
-## Learn More
+1. Clone the repository
+2. Install dependencies using `npm install` or `pnpm install`
+3. Create a `.env` file in the root directory and add the variables from .env.template
+4. Create a database and configure the connection string in the .env file
+5. Run database setup script using `npm run db:push` or `pnpm run db:push`
+6. Start the development server using `npm run dev` or `pnpm run dev`
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Features
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- Authentication with BetterAuth
+- Database management with Drizzle ORM
+- Create, update and delete Job Posts
+- Apply for jobs
+- View job posts
+- View job applications
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### Todo
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [ ] Add ability for admins to create interview slots
+- [ ] Add ability for admins to cancel interview slots
+- [ ] When interview is booked, generate a google calendar event
+- [ ] When interview is booked, send an email to the candidate
+- [ ] Add ability for candidates to view interview slots
+- [ ] Create contact form for candidates

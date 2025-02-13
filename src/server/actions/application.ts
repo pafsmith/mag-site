@@ -8,14 +8,17 @@ import { type JobApplication } from "~/client/types/application";
 import { supabase } from "~/server/db/supabase";
 import { db } from "~/server/db";
 import { applications } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { transporter } from "../nodemailer";
-import { url } from "inspector";
+
 export type SubmitApplicationResponse =
   | { success: true }
   | { success: false; fieldErrors: Record<string, string[]> };
 
-async function saveApplication(app: JobApplication): Promise<void> {
+async function saveApplication(
+  app: JobApplication,
+  userId: string,
+): Promise<void> {
   // Replace this with your actual saving logic (database/upload, etc.)
   const filename = await uploadImage(app.cv);
   console.log(app);
@@ -32,7 +35,7 @@ async function saveApplication(app: JobApplication): Promise<void> {
       coverLetter: app.coverLetter,
       cvUrl: filename,
       jobId: parseInt(app.jobId),
-      userId: user?.id,
+      userId: userId,
     },
   ]);
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -42,6 +45,14 @@ async function saveApplication(app: JobApplication): Promise<void> {
 export async function submitApplication(
   formData: FormData,
 ): Promise<SubmitApplicationResponse> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  if (!user) {
+    return { success: false, fieldErrors: { general: ["User not found"] } };
+  }
+
   const jobId = formData.get("jobId");
   const name = formData.get("name");
   const email = formData.get("email");
@@ -69,7 +80,7 @@ export async function submitApplication(
   const jobApplication: JobApplication = { ...result.data };
 
   try {
-    await saveApplication(jobApplication);
+    await saveApplication(jobApplication, user.id);
   } catch (error) {
     console.error("Error saving application", error);
     return {
@@ -174,3 +185,18 @@ export async function rejectApplication(id: number) {
     },
   );
 }
+
+export const checkPreviousApplication = async (
+  userId: string,
+  jobId: number,
+) => {
+  const application = await db
+    .select()
+    .from(applications)
+    .where(and(eq(applications.userId, userId), eq(applications.jobId, jobId)));
+
+  if (application.length > 0) {
+    return true;
+  }
+  return false;
+};

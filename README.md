@@ -7,6 +7,8 @@
 - TypeScript
 - Drizzle ORM
 - Shadcn Components
+- React Hook Form for form handling
+- Zod for form validation on client and server
 
 ### Requirements
 
@@ -33,6 +35,7 @@
 
 ### Todo
 
+- [ ] Finalize the contents of job application form
 - [ ] Add ability for admins to create interview slots
 - [ ] Add ability for admins to cancel interview slots
 - [ ] When interview is booked, generate a google calendar event
@@ -40,3 +43,5 @@
 - [ ] Add ability for candidates to view interview slots
 - [x] Create contact form for candidates
 - [ ] Create functionality for contact form
+- [ ] Add a restriction for re-applying for the same job within a certain timeframe
+- [x] Add admin route validation using middleware

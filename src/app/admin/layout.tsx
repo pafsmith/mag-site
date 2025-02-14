@@ -1,11 +1,12 @@
 import AdminNavbar from "~/components/admin/AdminNavbar";
 import CareersNavbar from "~/components/careers/CareersNavbar";
-
-export default function RootLayout({
+import { isAdmin } from "~/server/actions/authentication";
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await isAdmin();
   return (
     <>
       <CareersNavbar />

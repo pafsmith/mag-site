@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { auth } from "~/lib/auth";
 import { z } from "zod";
 
@@ -62,3 +63,16 @@ export async function signIn(formData: FormData) {
   }
   redirect("/careers/jobs");
 }
+
+export const isAdmin = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) {
+    redirect("/sign-in");
+  }
+
+  if (session.user.role !== "admin") {
+    redirect("/not-authorized");
+  }
+};

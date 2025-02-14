@@ -45,3 +45,8 @@
 - [ ] Create functionality for contact form
 - [ ] Add a restriction for re-applying for the same job within a certain timeframe
 - [x] Add admin route validation using middleware
+- [ ] Re film main video
+- [ ] Bus timetable
+- [ ] Department information
+- [ ] Finalize about page
+- [ ] Get photos for departments

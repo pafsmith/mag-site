@@ -20,7 +20,7 @@ export default function Navbar({ transparent }: { transparent: boolean }) {
       <nav aria-label="Global" className="">
         <Container className="flex items-center justify-between p-3">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            <span className="sr-only">Magna</span>
             <Image
               alt=""
               src="/logo.svg"

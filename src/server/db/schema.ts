@@ -10,6 +10,7 @@ import {
   text,
   boolean,
   serial,
+  time,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -139,4 +140,14 @@ export const verification = createTable("verification", {
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
+});
+
+export const busStops = createTable("bus_stops", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: varchar("description", { length: 255 }).notNull(),
+  pickupNumber: integer("pickup_number").notNull(),
+  time: time("time").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

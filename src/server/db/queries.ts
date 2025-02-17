@@ -1,7 +1,13 @@
 import "server-only";
 
 import { db } from "~/server/db";
-import { applications, departments, jobs, user } from "~/server/db/schema";
+import {
+  applications,
+  departments,
+  jobs,
+  user,
+  busStops,
+} from "~/server/db/schema";
 import { type JobSpec, type EditedJobInput } from "~/server/types/job-spec";
 import { eq, and, desc } from "drizzle-orm";
 
@@ -65,6 +71,9 @@ export const QUERIES = {
       .leftJoin(departments, eq(jobs.departmentId, departments.id))
       .where(eq(jobs.isActive, true))
       .orderBy(desc(jobs.isSeasonal));
+  },
+  getBusStops: async () => {
+    return await db.select().from(busStops).orderBy(busStops.pickupNumber);
   },
 };
 

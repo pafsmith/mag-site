@@ -66,6 +66,7 @@ export const jobs = createTable("jobs", {
   isSeasonal: boolean("is_seasonal").notNull().default(false),
   location: varchar("location", { length: 255 }).notNull().default("Telford"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 // Applications table

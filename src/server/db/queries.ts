@@ -3,7 +3,7 @@ import "server-only";
 import { db } from "~/server/db";
 import { applications, departments, jobs, user } from "~/server/db/schema";
 import { type JobSpec, type EditedJobInput } from "~/server/types/job-spec";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 
 export const QUERIES = {
   getJobs: async () => {
@@ -51,6 +51,21 @@ export const QUERIES = {
       .where(eq(applications.id, applicationId))
       .limit(1);
   },
+  getOpenJobs: async () => {
+    return await db
+      .select({
+        id: jobs.id,
+        title: jobs.title,
+        department: departments.name,
+        location: jobs.location,
+        updatedAt: jobs.updatedAt,
+        isSeasonal: jobs.isSeasonal,
+      })
+      .from(jobs)
+      .leftJoin(departments, eq(jobs.departmentId, departments.id))
+      .where(eq(jobs.isActive, true))
+      .orderBy(desc(jobs.isSeasonal));
+  },
 };
 
 export const MUTATIONS = {
@@ -73,6 +88,7 @@ export const MUTATIONS = {
         requirements: input.requirements,
         benefits: input.benefits,
         isSeasonal: input.isSeasonal,
+        updatedAt: new Date(),
       })
       .where(eq(jobs.id, parseInt(input.jobId)))
       .returning();

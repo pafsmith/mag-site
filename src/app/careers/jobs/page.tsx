@@ -3,15 +3,19 @@ import React from "react";
 
 import Navbar from "~/components/global/Navbar";
 import Footer from "~/components/global/Footer";
-
+import JobListingPage from "~/app/careers/jobs/JobList";
+import { QUERIES } from "~/server/db/queries";
 export default async function page() {
   // const activeJobs = await getActiveJobs();
   // const seasonalJobs = activeJobs.filter((job) => job.isSeasonal);
   // const permanentJobs = activeJobs.filter((job) => !job.isSeasonal);
 
+  const openJobs = await QUERIES.getOpenJobs();
+
   return (
     <>
       <Navbar transparent={false} />
+      <JobListingPage openJobs={openJobs} />
       {/* <div className="container mx-auto min-h-[60vh] max-w-7xl px-4 py-8">
         <div className="flex flex-col gap-7">
           <h1 className="text-center text-4xl font-bold">Active Jobs</h1>

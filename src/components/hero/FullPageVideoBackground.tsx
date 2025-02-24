@@ -19,10 +19,7 @@ export default function FullPageVideoBackground() {
           muted
           className="h-full w-full object-cover opacity-50"
         >
-          <source
-            src="https://utfs.io/f/EbsGU6WGPzCg1lX2LdE2RaPKEd4A5xnybD0BVOULYJk9Ssh6"
-            type="video/mp4"
-          />
+          <source src="/testchoc.mp4" type="video/mp4" />
         </video>
       </div>
       <Container>

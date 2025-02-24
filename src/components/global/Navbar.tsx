@@ -62,7 +62,7 @@ export default function Navbar({ transparent }: { transparent: boolean }) {
             }`}
           >
             <Link
-              href="/contact"
+              href="/contact-us"
               className={`group inline-flex items-center justify-center rounded-full bg-orange-600 px-4 py-2 text-sm font-semibold hover:bg-orange-500 hover:text-slate-100 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 active:bg-orange-800 active:text-orange-100 ${
                 transparent ? "text-white" : "text-white"
               }`}
